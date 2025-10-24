@@ -9,7 +9,7 @@ services:
       - "${MS_TRANSFERENCE_DB_PORT}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_DATABASE: ${SP_MS_TRANSFERENCE_DB_NAME}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'UTC'
@@ -17,7 +17,7 @@ services:
       - sp-ms-transference-storage-mysql:/var/lib/mysql
       - ./ms-transference/db-init:/docker-entrypoint-initdb.d
     networks:
-      - app-net
+      - challenges-net
 
   sp-ms-user-mysql:
     image: mysql:8.0.43-debian
@@ -26,7 +26,7 @@ services:
       - "${MS_USER_DB_PORT}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DB_NAME}
+      MYSQL_DATABASE: ${SP_MS_USER_DB_NAME}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'UTC'
@@ -34,15 +34,15 @@ services:
       - sp-ms-user-storage-mysql:/var/lib/mysql
       - ./ms-user/db-init:/docker-entrypoint-initdb.d
     networks:
-      - app-net
+      - challenges-net
 
   kafka:
     image: apache/kafka:4.1.0
-    container_name: ecommerce-kafka
+    container_name: simplified-payment-kafka
     ports:
       - "9092:9092"
     networks:
-      - app-net
+      - challenges-net
 
 volumes:
   sp-ms-transference-storage-mysql:
@@ -53,4 +53,3 @@ volumes:
 networks:
   challenges-net:
     driver: bridge
-
