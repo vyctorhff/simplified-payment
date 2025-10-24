@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "e9b732c3-1118-4b33-a37c-f03e2dbc236e",
+		"name": "ms-user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19232642",
+		"_collection_link": "https://dark-firefly-475981.postman.co/workspace/Challenge%253A-simplified-payment~a284f5b3-ed33-4c0d-bddc-5b3b52247eec/collection/19232642-e9b732c3-1118-4b33-a37c-f03e2dbc236e?action=share&source=collection_link&creator=19232642"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ms-user}}/v1/health",
+					"host": [
+						"{{ms-user}}"
+					],
+					"path": [
+						"v1",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ms-user}}/v1/user/1",
+					"host": [
+						"{{ms-user}}"
+					],
+					"path": [
+						"v1",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
