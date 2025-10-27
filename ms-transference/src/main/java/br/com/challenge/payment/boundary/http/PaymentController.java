@@ -1,6 +1,7 @@
 package br.com.challenge.payment.boundary.http;
 
-import br.com.challenge.payment.boundary.http.feign.dto.PaymentRequestDTO;
+import br.com.challenge.payment.boundary.http.dto.PaymentRequestDTO;
+import br.com.challenge.payment.boundary.http.dto.PaymentResponseDTO;
 import br.com.challenge.payment.core.model.Transaction;
 import br.com.challenge.payment.core.model.TransactionRequest;
 import br.com.challenge.payment.core.service.ProcessPaymentService;
@@ -19,11 +20,11 @@ public class PaymentController {
     private final ProcessPaymentService processPaymentService;
 
     @PostMapping
-    public ResponseEntity<Void> transfer(@RequestBody PaymentRequestDTO requestDTO) {
+    public ResponseEntity<PaymentResponseDTO> transfer(@RequestBody PaymentRequestDTO requestDTO) {
         TransactionRequest request = requestDTO.toModel();
         Transaction transaction = processPaymentService.process(request);
 
-        // TODO: !!!!!
-        return null;
+        PaymentResponseDTO response = PaymentResponseDTO.fromTransaction(transaction);
+        return ResponseEntity.ok(response);
     }
 }

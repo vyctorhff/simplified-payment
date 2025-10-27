@@ -1,4 +1,4 @@
-package br.com.challenge.payment.boundary.http.feign.dto;
+package br.com.challenge.payment.boundary.http.dto;
 
 import br.com.challenge.payment.core.model.TransactionRequest;
 
