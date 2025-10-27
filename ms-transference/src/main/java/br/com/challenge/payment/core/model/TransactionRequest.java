@@ -7,7 +7,21 @@ public record TransactionRequest(
         Integer payee,
         Double value
 ) {
-    public void validate() {
-        throw new PaymentValidatorException("not implement");
+    public void validate() throws PaymentValidatorException {
+        if (value <= 0.0) {
+            throw new PaymentValidatorException("Transfer value invalid");
+        }
+
+        if (isValidId(payer)) {
+            throw new PaymentValidatorException("User payer id invalid");
+        }
+
+        if (isValidId(payee)) {
+            throw new PaymentValidatorException("User payee id invalid");
+        }
+    }
+
+    private boolean isValidId(Integer id) {
+        return payee == null || payee <= 0;
     }
 }

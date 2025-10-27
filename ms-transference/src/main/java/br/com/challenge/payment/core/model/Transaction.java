@@ -6,6 +6,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("tb_transactional")
 @Data
@@ -28,19 +29,37 @@ public class Transaction {
     @MappedCollection(idColumn = "id_user_target")
     private User userTarget;
 
-    @MappedCollection(idColumn = "id_walllet_source")
-    private Wallet walletSource;
-
-    @MappedCollection(idColumn = "id_walllet_target")
-    private Wallet walletTarget;
-
     public Transaction(Double value, User source, User userTarget) {
         this.value = value;
         this.userSource = source;
         this.userTarget = userTarget;
+        this.dtCreate = LocalDateTime.now();
+        this.transactionHash = UUID.randomUUID().toString();
     }
 
     public boolean isStatusPaid() {
         return StatusTransaction.PAID.equals(this.status);
+    }
+
+    public Wallet getWalletSource() {
+        return this.userSource.getWallet();
+    }
+
+    public Wallet getWalletTarget() {
+        return this.userTarget.getWallet();
+    }
+
+    public void transfer(Double value) {
+        this.getWalletSource().debit(value);
+        this.getWalletTarget().credit(value);
+    }
+
+    public boolean isUserSourceHasBalance() {
+        return this.userSource.getWallet()
+                .isCanTransfer(this.value);
+    }
+
+    public boolean isUserSourceNotLojist() {
+        return !this.userSource.isUserLojist();
     }
 }
