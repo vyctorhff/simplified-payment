@@ -12,4 +12,8 @@ public class Wallet {
     private Integer id;
 
     private Double currentValue;
+
+    public void debit(Double value) {}
+
+    public void credit(Double value) {}
 }

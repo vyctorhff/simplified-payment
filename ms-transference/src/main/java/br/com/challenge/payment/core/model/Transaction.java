@@ -27,4 +27,20 @@ public class Transaction {
 
     @MappedCollection(idColumn = "id_user_target")
     private User userTarget;
+
+    @MappedCollection(idColumn = "id_walllet_source")
+    private Wallet walletSource;
+
+    @MappedCollection(idColumn = "id_walllet_target")
+    private Wallet walletTarget;
+
+    public Transaction(Double value, User source, User userTarget) {
+        this.value = value;
+        this.userSource = source;
+        this.userTarget = userTarget;
+    }
+
+    public boolean isStatusPaid() {
+        return StatusTransaction.PAID.equals(this.status);
+    }
 }
