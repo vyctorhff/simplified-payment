@@ -18,4 +18,8 @@ public class ApplicationException extends RuntimeException {
     public void add(String error) {
         this.errors.add(error);
     }
+
+    public boolean hasErrors() {
+        return !this.errors.isEmpty();
+    }
 }
