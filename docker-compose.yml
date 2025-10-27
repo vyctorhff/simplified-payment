@@ -38,9 +38,15 @@ services:
 
   kafka:
     image: apache/kafka:4.1.0
-    container_name: simplified-payment-kafka
+    container_name: kafka
     ports:
       - "9092:9092"
+    networks:
+      - challenges-net
+
+  redis:
+    image: redis
+    container_name: redis
     networks:
       - challenges-net
 
