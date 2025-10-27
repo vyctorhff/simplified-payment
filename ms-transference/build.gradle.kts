@@ -30,9 +30,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.kafka:spring-kafka")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
+
 	implementation("org.apache.commons:commons-lang3:3.19.0")
+    implementation("com.google.code.gson:gson:2.13.2")
 	
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
