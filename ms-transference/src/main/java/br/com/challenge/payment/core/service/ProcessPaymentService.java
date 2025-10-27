@@ -1,9 +1,11 @@
 package br.com.challenge.payment.core.service;
 
 import br.com.challenge.payment.boundary.repository.TransactionRepository;
+import br.com.challenge.payment.core.exception.PaymentException;
+import br.com.challenge.payment.core.model.StatusTransaction;
 import br.com.challenge.payment.core.model.Transaction;
+import br.com.challenge.payment.core.model.TransactionRequest;
 import br.com.challenge.payment.core.model.User;
-import br.com.challenge.payment.core.validator.PaymentValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,44 +15,47 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ProcessPaymentService {
 
-    private final PaymentValidator validator;
+    private final FindUserService findUserService;
 
-    private final UserBalanceValidator userBalanceValidator;
+    private final ProcessPaymentPreCondictionsService preCondictionsService;
 
-    private final UserTypeValidator userTypeValidator;
+    private final ProcessPaymentPostConditionsService postConditionsService;
 
-    private final FindUserCache findUserCache;
+    private final TransferenceService transferenceService;
 
-    private final ExternalAuthorization externalAuthorization;
+    private final TransactionRepository repository;
 
-//    private final TransactionRepository repository;
-
-    private final TransaferenceService transaferenceService;
-
-    private final SendPaymentNotification sendPaymentNotification;
-
-    public void process(Transaction transaction) {
-        log.info("Processing payment");
-
+    public Transaction process(TransactionRequest request) throws PaymentException {
         log.info("Validating request");
-        validator.validate(transaction);
+        request.validate();
 
-        log.info("Search users");
-        findUserCache.find(transaction);
+        Transaction transaction = createTransaction(request);
 
-        log.info("Check if user can pay");
-        userTypeValidator.validate(transaction.getUserSource());
+        preCondictionsService.check(transaction);
 
-        log.info("Check user source balance");
-        userBalanceValidator.validate(transaction.getUserSource());
+        if (transaction.isStatusPaid()) {
+            log.info("Executing transference");
 
-        log.info("Check authorization");
-        externalAuthorization.authorize();
+            transferenceService.process(transaction);
+            postConditionsService.process(transaction);
+        } else {
+            log.info("Transference not execute. Persisting for history");
+            repository.save(transaction);
+        }
 
-        // TODO: do the transference
-//        repository.save(transaction);
+        return transaction;
+    }
 
-        log.info("Sending message to process notification");
-        sendPaymentNotification.send(transaction);
+    private Transaction createTransaction(TransactionRequest request) {
+        log.info("Search users source");
+        User userSource = findUserService.find(request.payee());
+
+        log.info("Search users target");
+        User userTarget = findUserService.find(request.payer());
+
+        Transaction transaction = new Transaction(request.value(), userSource, userTarget);
+        transaction.setStatus(StatusTransaction.PAID);
+
+        return transaction;
     }
 }
