@@ -47,10 +47,7 @@ public class ProcessPaymentService {
     }
 
     private Transaction createTransaction(TransactionRequest request) {
-        log.info("Search users source");
         User userSource = findUserService.find(request.payee());
-
-        log.info("Search users target");
         User userTarget = findUserService.find(request.payer());
 
         Transaction transaction = new Transaction(request.value(), userSource, userTarget);

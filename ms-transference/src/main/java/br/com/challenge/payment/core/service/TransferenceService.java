@@ -14,9 +14,9 @@ public class TransferenceService {
 
     @Transactional
     public void process(Transaction transaction) {
-        transaction.transfer(transaction.getValue());
+        transaction.transfer();
 
-        walletRepository.save(transaction.getWalletSource());
-        walletRepository.save(transaction.getWalletTarget());
+        walletRepository.save(transaction.getUserSourceModel().getWallet());
+        walletRepository.save(transaction.getUserSourceModel().getWallet());
     }
 }

@@ -2,6 +2,7 @@ package br.com.challenge.payment.core.service;
 
 import br.com.challenge.payment.boundary.http.feign.UserClient;
 import br.com.challenge.payment.boundary.http.feign.dto.UserByIdResponseDTO;
+import br.com.challenge.payment.boundary.repository.UserRepository;
 import br.com.challenge.payment.boundary.repository.redis.UserCacheRepository;
 import br.com.challenge.payment.boundary.repository.redis.model.UserCache;
 import br.com.challenge.payment.core.exception.FindUserException;
@@ -19,23 +20,34 @@ public class FindUserService {
 
     private final UserCacheRepository userCacheRepository;
 
+    private final UserRepository userRepository;
+
     private final UserClient userClient;
 
     public User find(Integer id) {
         Optional<User> inCache = findInCache(id);
-        return inCache.orElseGet(() -> findUserExternal(id));
+
+        return inCache.orElseGet(() -> {
+
+            User user = findUserExternal(id);
+            Optional<User> userDataBase = userRepository.findByEmail(user.getEmail());
+
+            return userDataBase.orElseGet(() -> {
+                userRepository.save(user);
+                userCacheRepository.save(UserCache.fromUser(user));
+
+                return user;
+            });
+        });
     }
 
     private Optional<User> findInCache(Integer id) {
         log.info("Search user in cache");
-        try {
-            Optional<UserCache> userCache = userCacheRepository.findById(String.valueOf(id));
-            if (userCache.isPresent()) {
-                User user = userCache.get().toUserModel();
-                return Optional.of(user);
-            }
-        } catch (Exception e) {
-            log.info("User not locate in cache");
+
+        Optional<UserCache> userCache = userCacheRepository.findById(String.valueOf(id));
+        if (userCache.isPresent()) {
+            User user = userCache.get().toUserModel();
+            return Optional.of(user);
         }
 
         return Optional.empty();

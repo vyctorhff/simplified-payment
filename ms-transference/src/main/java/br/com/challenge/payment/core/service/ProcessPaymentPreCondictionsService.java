@@ -39,8 +39,9 @@ public class ProcessPaymentPreCondictionsService {
     private void checkAuthorized(Transaction transaction) {
         log.info("Validating external authorization");
 
-        boolean isAuthorized = externalAuthorizationClient.doAuthorization().isAuthorized();
+        boolean isAuthorized = externalAuthorizationClient.process().isAuthorized();
         if (isAuthorized) {
+            log.info("NOT AUTHORIZED!!!!!");
             transaction.setStatus(StatusTransaction.CANCELED_NOT_UNAUTHORIZED);
         }
     }
