@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 public class ApplicationException extends RuntimeException {
 
-    private List<String> errors;
+    private final List<String> errors;
 
     public ApplicationException(String message) {
         super(message);
