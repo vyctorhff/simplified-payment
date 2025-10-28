@@ -17,6 +17,7 @@ public class User {
     private String nameLast;
 
     private String cpf;
+
     private String cnpj;
 
     @MappedCollection(idColumn = "id_user")

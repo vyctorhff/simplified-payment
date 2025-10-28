@@ -18,4 +18,12 @@ class UserTest {
         User user = UserHelper.createUserCommon();
         assertTrue(user.isUserCommon());
     }
+
+    @Test
+    void testShouldConcatName() {
+        User user = UserHelper.createUserCommon();
+        String expected = user.getNameFirst() + " " + user.getNameLast();
+
+        assertEquals(expected, user.getCompleteName());
+    }
 }

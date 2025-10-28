@@ -3,6 +3,7 @@ package br.com.challenge.payment.boundary.http.dto;
 import br.com.challenge.payment.core.model.User;
 
 public record UserResponseDTO(
+        Integer id,
         String name,
         String cpf,
         String cnpj,
@@ -11,8 +12,9 @@ public record UserResponseDTO(
 ) {
     public static UserResponseDTO fromUser(User user) {
         return new UserResponseDTO(
+                user.getId(),
                 user.getCompleteName(),
-                user.getCnpj(),
+                user.getCpf(),
                 user.getCnpj(),
                 WalletResponseDTO.fromWallet(user.getWallet()),
                 AccountResponseDTO.fromAccount(user.getAccount())
