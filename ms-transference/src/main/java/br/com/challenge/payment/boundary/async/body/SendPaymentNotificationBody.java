@@ -12,8 +12,8 @@ public record SendPaymentNotificationBody (
 ) {
     public static SendPaymentNotificationBody fromModel(Transaction transaction) {
         return new SendPaymentNotificationBody(
-                transaction.getUserSource().getEmail(),
-                transaction.getUserSource().getName(),
+                transaction.getUserTargetModel().getEmail(),
+                transaction.getUserTargetModel().getName(),
                 transaction.getValue(),
                 transaction.getDtCreate()
         );

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SendPaymentNotification {
 
-    @Value("${async.produto.topico}")
+    @Value("${kafka.topic.notification}")
     private String topic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
