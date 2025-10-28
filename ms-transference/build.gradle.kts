@@ -29,9 +29,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.kafka:spring-kafka")
-	implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:3.3.0")
 
 	implementation("org.apache.commons:commons-lang3:3.19.0")
     implementation("com.google.code.gson:gson:2.13.2")
@@ -42,6 +42,7 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	
 	annotationProcessor("org.projectlombok:lombok")
+	
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.kafka:spring-kafka-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
