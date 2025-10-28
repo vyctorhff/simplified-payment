@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "e083a94c-7964-4038-a36d-a704a659086a",
+		"name": "ms-transference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19232642",
+		"_collection_link": "https://dark-firefly-475981.postman.co/workspace/Challenge%3A-simplified-payment~a284f5b3-ed33-4c0d-bddc-5b3b52247eec/collection/19232642-e083a94c-7964-4038-a36d-a704a659086a?action=share&source=collection_link&creator=19232642"
+	},
+	"item": [
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"value\": 100.0,\n  \"payer\": 1,\n  \"payee\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ms-transference}}/transfer",
+					"host": [
+						"{{ms-transference}}"
+					],
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Transfer - user1 to user2",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": 11.0,\n  \"payer\": 1,\n  \"payee\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ms-transference}}/transfer",
+							"host": [
+								"{{ms-transference}}"
+							],
+							"path": [
+								"transfer"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Transfer - user1 to lojist1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"value\": 10.0,\n  \"payer\": 1,\n  \"payee\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ms-transference}}/transfer",
+							"host": [
+								"{{ms-transference}}"
+							],
+							"path": [
+								"transfer"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		}
+	]
+}
