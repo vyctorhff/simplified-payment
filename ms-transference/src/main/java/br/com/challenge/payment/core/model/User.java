@@ -1,6 +1,7 @@
 package br.com.challenge.payment.core.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -8,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("tb_user")
 @Data
+@NoArgsConstructor
 public class User {
 
     @Id
