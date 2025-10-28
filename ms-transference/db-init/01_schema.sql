@@ -20,8 +20,8 @@ CREATE TABLE tb_transaction(
     id_user_source INTEGER NOT NULL,
     id_user_target INTEGER NOT NULL,
     value DOUBLE NOT NULL,
-    status VARCHAR(20) NOT NULL,
-    transaction_hash VARCHAR(20) NOT NULL,
+    status VARCHAR(40) NOT NULL,
+    transaction_hash VARCHAR(50) NOT NULL,
     dt_create DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (id_user_source) REFERENCES tb_user (id),
