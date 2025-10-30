@@ -12,59 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-
       - name: Setup Java 24
         uses: actions/setup-java@v5
         with:
           java-version: '24'
           distribution: 'temurin'
-
       - name: Gradle Check
         working-directory: ms-user
         run: gradle ckeck
-
       - name: Gradle build
         working-directory: ms-user
         run: gradle build
-
-  test:
-    runs-on: ubuntu-20.04
-    needs: build
-    steps:
-      - name: Setup Java 24
-        uses: actions/setup-java@v5
-        with:
-          java-version: '24'
-          distribution: 'temurin'
-
-      - name: Run unit tests
-        working-directory: ms-user
-        run: gradle test
-
-      - name: Coverage
-        run: echo Not yet!
-
-  test-integrade:
-    runs-on: ubuntu-20.04
-    needs: test
-
-  code-analyze:
-    runs-on: ubuntu-20.04
-    needs: test
-
-  docker:
-    runs-on: ubuntu-20.04
-    needs: code-analyze
-    steps:
-      - name: checkstyle analyzer
-        run: echo Not done yet!
-
-  deploy:
-    runs-on: ubuntu-20.04
-    environment:
-      name: dev
-      url: 'ms-user.simplified-payment.educ.br'
-    needs: docker
-    steps:
-      - name: Upload docker image
-        run: echo Not done yet!
